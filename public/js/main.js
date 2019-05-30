@@ -217,17 +217,6 @@ function requestTurn(turnURL) {
     console.log('Getting TURN server from ', turnURL);
     // No TURN server. Get one from computeengineondemand.appspot.com:
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var turnServer = JSON.parse(xhr.responseText);
-        console.log('Got TURN server: ', turnServer);
-        pcConfig.iceServers.push({
-          'urls': 'turn:' + turnServer.username + '@' + turnServer.turn,
-          'credential': turnServer.password
-        });
-        turnReady = true;
-      }
-    };
     if ("withCredentials" in xhr) {
     // XHR for Chrome/Firefox/Opera/Safari.
       xhr.open('GET', turnURL, true);
@@ -239,7 +228,19 @@ function requestTurn(turnURL) {
     // CORS not supported.
     xhr = null;
     };
+    xhr.setRequestHeader('Access-Control-Allow-Headers','*');
     xhr.setRequestHeader('Access-Control-Allow-Origin','*');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var turnServer = JSON.parse(xhr.responseText);
+        console.log('Got TURN server: ', turnServer);
+        pcConfig.iceServers.push({
+          'urls': 'turn:' + turnServer.username + '@' + turnServer.turn,
+          'credential': turnServer.password
+        });
+        turnReady = true;
+      }
+    };
     xhr.send();
   }
 }
