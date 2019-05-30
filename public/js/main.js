@@ -228,7 +228,16 @@ function requestTurn(turnURL) {
         turnReady = true;
       }
     };
-    xhr.open('GET', turnURL, true);
+    if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+      xhr.open('GET', turnURL, true);
+    } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+      xhr = new XDomainRequest();
+      xhr.open('GET', turnURL);
+    } else {
+    // CORS not supported.
+    xhr = null;
     xhr.send();
   }
 }
