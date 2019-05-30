@@ -239,6 +239,7 @@ function requestTurn(turnURL) {
     // CORS not supported.
     xhr = null;
     };
+    xhr.setRequestHeader('Access-Control-Allow-Origin':'*')
     xhr.send();
   }
 }
