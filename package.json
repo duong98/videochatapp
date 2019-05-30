@@ -1,0 +1,14 @@
+{
+  "name": "webrtc-codelab",
+  "version": "0.0.1",
+  "description": "WebRTC codelab",
+  "dependencies": {
+    "express": "^4.17.0",
+    "cors": "^2.8.4",
+    "socket.io": "^2.0.4",
+    "izitoast": "^1.4.0"
+  },
+  "engines": {
+    "node": "8.10.0"
+  }
+}
