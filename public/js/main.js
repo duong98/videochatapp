@@ -238,6 +238,7 @@ function requestTurn(turnURL) {
     } else {
     // CORS not supported.
     xhr = null;
+    };
     xhr.send();
   }
 }
